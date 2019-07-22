@@ -1,7 +1,12 @@
 <script>
 import Axios from 'axios';
+import Comments from './Comments.vue';
+
 export default {
     name: 'MarkerDetail',
+    components: {
+        Comments,
+    },
     props: {
         data: Object,
     },
@@ -61,7 +66,7 @@ export default {
                             v-bind:key="index">
                         </li>
                     </ul>
-                    {{ rating }} ({{ votes }})
+                    {{ rating }} ({{ votes }} ratings)
                 </span>
                 <span class="marker-detail__rating-none" v-if="votes === -1">No ratings yet</span>
             </p>
@@ -70,7 +75,7 @@ export default {
                 {{ markerDescription }}
             </p>
 
-            <ul class="marker-detail__comments" v-html="markerComments"></ul>
+            <Comments v-bind:commentsHtml="markerComments" />
         </div>
     </article>
 </template>
@@ -79,7 +84,9 @@ export default {
 .marker-detail {
     position: fixed;
     top: 0; left: 0;
-    width: 100vw; height: 100vh;
+    width: calc(100vw - 1rem); height: calc(100vh - 1rem);
+    margin: .5rem;
+    border-radius: .75rem;
     box-sizing: border-box;
     background: rgba(255, 255, 255, .95);
     overflow-y: auto;
@@ -87,9 +94,14 @@ export default {
 .marker-detail__content {
     padding: 1.5rem;
 }
+.marker-detail__title {
+    font-weight: 200;
+    font-size: 2rem;
+    margin: 1.5rem 0 0;
+}
 
 .marker-detail__img-container {
-    width: 100%; height: 33vh;
+    width: 100%; height: 28vh;
     background-position: center;
     background-size: cover;
     background-color: #333;
@@ -99,20 +111,21 @@ export default {
     position: fixed;
     display: block;
     top: 1.5rem; right: 1.5rem;
-    width: 2rem; height: 2rem;
+    width: 2.2rem; height: 2.2rem;
     padding: 0;
     border: 0;
     outline: 0;
-    background: rgba(0, 0, 0, .25);
+    background: rgba(255, 255, 255, .5);
+    border-radius: 50%;
 }
 .marker-detail__close-btn:before, .marker-detail__close-btn:after {
   position: absolute;
-  top: 0;
-  left: 1rem;
+  top: .2rem;
+  left: 1.1rem;
   content: ' ';
-  height: 2rem;
-  width: 2px;
-  background-color: #FFF;
+  height: 1.75rem;
+  width: .0625rem;
+  background-color: #333;
 }
 .marker-detail__close-btn:before {
   transform: rotate(45deg);
@@ -121,15 +134,31 @@ export default {
   transform: rotate(-45deg);
 }
 
+.marker-detail__rating {
+    margin: 1.5rem 0;
+    border-top: .0625rem solid #333;
+    border-bottom: .0625rem solid #333;
+}
+.marker-detail__rating__container {
+    display: flex;
+    align-items: center;
+}
 .marker-detail__rating__stars {
     display: flex;
     padding: 0;
-    margin: .5rem -.25rem;
+    margin: .5rem .5rem .5rem -.1rem;
 }
 .marker-detail__rating__star {
     display: block;
-    width: 1rem; height: 1rem;
-    background-color: gold;
-    margin: .25rem;
+    width: 1.7rem; height: 1.8rem;
+    background: no-repeat url(~@/assets/icons/star.svg) center;
+    background-size: contain;
+    margin: .1rem;
+}
+
+.marker-detail__description {
+    font-size: 1rem;
+    line-height: 1.5;
+    font-weight: 200;
 }
 </style>

@@ -15,12 +15,14 @@ export default {
     </div>
 </template>
 
-<style>
+<style lang="scss">
+@import './styles/fonts';
 #app {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
 body {
     margin: 0;
+    font-family: Inter, Arial, Helvetica, sans-serif;
 }
 </style>
