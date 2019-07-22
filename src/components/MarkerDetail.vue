@@ -1,12 +1,34 @@
 <script>
+import Axios from 'axios';
 export default {
     name: 'MarkerDetail',
     props: {
         data: Object,
     },
+    data() {
+        return {
+            markerDescription: null,
+            markerComments: null,
+        }
+    },
+    mounted() {
+        Axios
+            .get('https://cors-anywhere.herokuapp.com/https://www.badkartan.se' + this.data.point_link)
+            .then((data) => {
+                let site = document.createElement('html');
+                site.innerHTML = data.data;
+                
+                const markerDescription = site.getElementsByClassName('description_text');
+                if (markerDescription.length > 0)
+                    this.markerDescription = markerDescription[0].innerHTML;
+
+                const markerComments = site.getElementsByClassName('commentlist');
+                if (markerComments.length > 0)
+                    this.markerComments = markerComments[0].innerHTML;
+            })
+    },
     methods: {
         onClose() {
-            console.log('sdfsdf')
             this.$emit('closeMarkerDetail');
         }
     },
@@ -31,14 +53,24 @@ export default {
         <div class="marker-detail__content">
             <h1 class="marker-detail__title">{{ data.point_message }}</h1>
             <p class="marker-detail__rating">
-                <ul class="marker-detail__rating__stars">
-                    <li 
-                        class="marker-detail__rating__star"
-                        v-for="index in ratingInt"
-                        v-bind:key="index">
-                    </li>
-                </ul>
-                {{ rating }} ({{ votes }})</p>
+                <span class="marker-detail__rating__container" v-if="votes > -1">
+                    <ul class="marker-detail__rating__stars">
+                        <li 
+                            class="marker-detail__rating__star"
+                            v-for="index in ratingInt"
+                            v-bind:key="index">
+                        </li>
+                    </ul>
+                    {{ rating }} ({{ votes }})
+                </span>
+                <span class="marker-detail__rating-none" v-if="votes === -1">No ratings yet</span>
+            </p>
+
+            <p class="marker-detail__description">
+                {{ markerDescription }}
+            </p>
+
+            <ul class="marker-detail__comments" v-html="markerComments"></ul>
         </div>
     </article>
 </template>
@@ -50,6 +82,7 @@ export default {
     width: 100vw; height: 100vh;
     box-sizing: border-box;
     background: rgba(255, 255, 255, .95);
+    overflow-y: auto;
 }
 .marker-detail__content {
     padding: 1.5rem;
@@ -63,7 +96,7 @@ export default {
 }
 
 .marker-detail__close-btn {
-    position: absolute;
+    position: fixed;
     display: block;
     top: 1.5rem; right: 1.5rem;
     width: 2rem; height: 2rem;
