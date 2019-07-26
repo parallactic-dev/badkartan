@@ -89,6 +89,7 @@ xsOm5vbmU7c3Ryb2tlOiNmZmY7c3Ryb2tlLXdpZHRoOjJweCIvPjwvc3ZnPg=="
     box-sizing: border-box;
     margin: 0.5rem;
     padding: 1rem;
+    border-radius: .75rem;
     background: #fff;
 }
 .install-notice__title {
