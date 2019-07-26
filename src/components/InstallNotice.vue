@@ -4,6 +4,7 @@ export default {
     name: "InstallNotice",
     data() {
         return {
+            showMessage: true,
             isStandAlone: true,
             isChrome: false,
             isSafari: false,
@@ -14,7 +15,6 @@ export default {
         setTimeout(() => {
             this.isStandAlone = this.checkIfStandAlone();
         }, 2000)
-        console.log(this.isChrome)
     },
     methods: {
         checkIfStandAlone() {
@@ -28,13 +28,16 @@ export default {
             this.isSafari = /safari/.test(uaString);
 
             if ((this.isChrome) && (this.isSafari)) { this.isSafari = false; }
+        },
+        onClose() {
+            this.showMessage = false;
         }
     }
 };
 </script>
 
 <template>
-    <article class="install-notice" v-if="!isStandAlone && isSafari">
+    <article class="install-notice" v-if="showMessage && !isStandAlone && isSafari">
         <h1 class="install-notice__title">Add a shortcut to your home screen</h1>
         <button class="install-notice__close-btn" v-on:click="onClose()"></button>
         <ol class="install-notice__instructions">
