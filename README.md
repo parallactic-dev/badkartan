@@ -1,4 +1,11 @@
-# badkartan
+# Badkartan
+
+This is a simple progressive web app which shows swimming spots in Sweden on an interactive map. Each loacation is provided with some usefull information such as description, photos, ratings and comments of visitors from each spot.
+
+All data is gathered from [https://www.badkartan.se/](https://www.badkartan.se/) a website providing amazing information about swimming spots but unfortunately not in a mobile friendly layout.
+
+All content of this app belongs to its source https://www.badkartan.se/ and may be copyrighted material. This app is a sample project and not intended for commercial use.
+
 
 ## Project setup
 ```
@@ -14,16 +21,3 @@ npm run serve
 ```
 npm run build
 ```
-
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
