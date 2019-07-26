@@ -1,42 +1,155 @@
 <script>
 import axios from "axios";
-import { gmapApi } from 'vue2-google-maps';
-import { xmlToJson, debounce } from '../helpers';
-import MarkerDetail from './MarkerDetail.vue';
-import LoadIndicator from './LoadIndicator';
+import { gmapApi } from "vue2-google-maps";
+import { xmlToJson, debounce } from "../helpers";
+import MarkerDetail from "./MarkerDetail.vue";
+import LoadIndicator from "./LoadIndicator";
 
 export default {
     name: "OverviewMap",
     components: {
         MarkerDetail,
-        LoadIndicator,
+        LoadIndicator
     },
     data() {
         return {
             markers: [],
             currentMarker: null,
             isLoading: false,
-        }
+            mapStyle: [
+                {
+                    featureType: "landscape",
+                    stylers: [
+                        {
+                            hue: "#FFA800"
+                        },
+                        {
+                            saturation: 0
+                        },
+                        {
+                            lightness: 0
+                        },
+                        {
+                            gamma: 1
+                        }
+                    ]
+                },
+                {
+                    featureType: "road.highway",
+                    stylers: [
+                        {
+                            hue: "#53FF00"
+                        },
+                        {
+                            saturation: -73
+                        },
+                        {
+                            lightness: 40
+                        },
+                        {
+                            gamma: 1
+                        }
+                    ]
+                },
+                {
+                    featureType: "road.arterial",
+                    stylers: [
+                        {
+                            hue: "#FBFF00"
+                        },
+                        {
+                            saturation: 0
+                        },
+                        {
+                            lightness: 0
+                        },
+                        {
+                            gamma: 1
+                        }
+                    ]
+                },
+                {
+                    featureType: "road.local",
+                    stylers: [
+                        {
+                            hue: "#00FFFD"
+                        },
+                        {
+                            saturation: 0
+                        },
+                        {
+                            lightness: 30
+                        },
+                        {
+                            gamma: 1
+                        }
+                    ]
+                },
+                {
+                    featureType: "water",
+                    stylers: [
+                        {
+                            hue: "#00BFFF"
+                        },
+                        {
+                            saturation: 6
+                        },
+                        {
+                            lightness: 8
+                        },
+                        {
+                            gamma: 1
+                        }
+                    ]
+                },
+                {
+                    featureType: "poi",
+                    stylers: [
+                        {
+                            hue: "#679714"
+                        },
+                        {
+                            saturation: 33.4
+                        },
+                        {
+                            lightness: -25.4
+                        },
+                        {
+                            gamma: 1
+                        }
+                    ]
+                }
+            ],
+        };
     },
     mounted() {
         // add event listener for boundaries change and reload data
-        this.$refs.mapRef.$mapPromise.then((map) => {
-            this.google.maps.event.addListener(map, 'bounds_changed', debounce(() => { 
+        this.$refs.mapRef.$mapPromise.then(map => {
+            // bounds event listener
+            this.google.maps.event.addListener(
+                map,
+                "bounds_changed",
+                debounce(() => {
                     this.loadMarkers(map.getCenter(), map.getBounds());
-                 }, 1000)
+                }, 1000)
             );
         });
     },
     methods: {
         loadMarkers(center, bounds) {
-            const centerString = center.lat() + ',' + center.lng();
-            const southwestString = bounds.na.j + ',' + bounds.ga.j;
+            const centerString = center.lat() + "," + center.lng();
+            const southwestString = bounds.na.j + "," + bounds.ga.j;
 
             this.isLoading = true;
 
             axios
                 .get(
-                    process.env.VUE_APP_API_URL + 'https://www.badkartan.se/ajax.php?action=manually_load_venues&center=(' + centerString + ')&southwest=(' + southwestString + ')'
+                    process.env.VUE_APP_API_URL +
+                        "https://www.badkartan.se/ajax.php?action=manually_load_venues&center=(" +
+                        centerString +
+                        ")&southwest=(" +
+                        southwestString +
+                        ")"
                 )
                 .then(this.onDataLoaded)
                 .catch(this.onError);
@@ -49,7 +162,7 @@ export default {
             if (parsedData.markers && parsedData.markers.marker)
                 this.markers = parsedData.markers.marker;
 
-                this.isLoading = false;
+            this.isLoading = false;
         },
         onError(err, data) {
             this.isLoading = false;
@@ -78,6 +191,7 @@ export default {
                 streetViewControl: false,
                 rotateControl: false,
                 fullscreenControl: false,
+                styles: mapStyle,
             }"
             map-type-id="roadmap"
             style="width: 100%; height: 100%"
@@ -91,11 +205,11 @@ export default {
                 v-on:click="onMarkerClick(m)"
             />
         </GmapMap>
-        <MarkerDetail 
-            v-if="currentMarker" 
+        <MarkerDetail
+            v-if="currentMarker"
             v-bind:data="currentMarker.attributes"
-            v-on:closeMarkerDetail="onCloseMarkerDetail()">
-        </MarkerDetail>
+            v-on:closeMarkerDetail="onCloseMarkerDetail()"
+        ></MarkerDetail>
         <div class="map__load-indicator" v-if="isLoading">
             <LoadIndicator />
         </div>
@@ -109,10 +223,11 @@ export default {
 }
 .map__load-indicator {
     position: fixed;
-    bottom: 0; left: 0;
+    bottom: 0;
+    left: 0;
     width: 100%;
-    padding: .5rem 0;
-    background: #FFF;
+    padding: 0.5rem 0;
+    background: #fff;
     text-align: center;
 }
 </style>
