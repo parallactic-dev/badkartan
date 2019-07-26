@@ -1,11 +1,13 @@
 <script>
 import Axios from 'axios';
 import Comments from './Comments.vue';
+import LoadIndicator from './LoadIndicator';
 
 export default {
     name: 'MarkerDetail',
     components: {
         Comments,
+        LoadIndicator,
     },
     props: {
         data: Object,
@@ -14,11 +16,12 @@ export default {
         return {
             markerDescription: null,
             markerComments: null,
+            isLoading: true,
         }
     },
     mounted() {
         Axios
-            .get('https://cors-anywhere.herokuapp.com/https://www.badkartan.se' + this.data.point_link)
+            .get(process.env.VUE_APP_API_URL + 'https://www.badkartan.se' + this.data.point_link)
             .then((data) => {
                 let site = document.createElement('html');
                 site.innerHTML = data.data;
@@ -30,6 +33,8 @@ export default {
                 const markerComments = site.getElementsByClassName('commentlist');
                 if (markerComments.length > 0)
                     this.markerComments = markerComments[0].innerHTML;
+
+                this.isLoading = false;
             })
     },
     methods: {
@@ -66,16 +71,18 @@ export default {
                             v-bind:key="index">
                         </li>
                     </ul>
-                    {{ rating }} ({{ votes }} ratings)
+                    {{ rating }} ({{ votes }} votes)
                 </span>
                 <span class="marker-detail__rating-none" v-if="votes === -1">No ratings yet</span>
             </p>
 
-            <p class="marker-detail__description">
-                {{ markerDescription }}
-            </p>
-
-            <Comments v-bind:commentsHtml="markerComments" />
+            <span v-if="!isLoading">
+                <p class="marker-detail__description">
+                    {{ markerDescription }}
+                </p>
+                <Comments v-bind:commentsHtml="markerComments" />
+            </span>
+            <LoadIndicator v-if="isLoading" />
         </div>
     </article>
 </template>
@@ -90,6 +97,7 @@ export default {
     box-sizing: border-box;
     background: rgba(255, 255, 255, .95);
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }
 .marker-detail__content {
     padding: 1.5rem;
@@ -104,7 +112,7 @@ export default {
     width: 100%; height: 28vh;
     background-position: center;
     background-size: cover;
-    background-color: #333;
+    background-color: #888;
 }
 
 .marker-detail__close-btn {
@@ -125,7 +133,7 @@ export default {
   content: ' ';
   height: 1.75rem;
   width: .0625rem;
-  background-color: #333;
+  background-color: #888;
 }
 .marker-detail__close-btn:before {
   transform: rotate(45deg);
@@ -136,14 +144,15 @@ export default {
 
 .marker-detail__rating {
     margin: 1.5rem 0;
-    border-top: .0625rem solid #333;
-    border-bottom: .0625rem solid #333;
+    border-top: .0625rem solid #888;
+    border-bottom: .0625rem solid #888;
 }
 .marker-detail__rating__container {
     display: flex;
     align-items: center;
 }
-.marker-detail__rating__stars {
+.marker-detail__rating__stars,
+.marker-detail__rating-none {
     display: flex;
     padding: 0;
     margin: .5rem .5rem .5rem -.1rem;

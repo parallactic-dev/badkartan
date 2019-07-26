@@ -1,12 +1,12 @@
 <script>
 export default {
-    name: 'OverviewMap',
+    name: 'LoadIndicator',
 };
 </script>
 
 <template>
-    <div class="map">
-        
+    <div class="load-indicator">
+        Loading…
     </div>
 </template>
 
