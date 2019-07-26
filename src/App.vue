@@ -1,10 +1,12 @@
 <script>
-import OverviewMap from './components/OverviewMap.vue';
+import OverviewMap from './components/OverviewMap';
+import InstallNotice from './components/InstallNotice';
 
 export default {
     name: "app",
     components: {
-        OverviewMap
+        OverviewMap,
+        InstallNotice
     }
 };
 </script>
@@ -12,6 +14,7 @@ export default {
 <template>
     <div id="app">
         <OverviewMap />
+        <InstallNotice />
     </div>
 </template>
 
