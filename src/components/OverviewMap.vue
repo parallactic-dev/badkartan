@@ -138,7 +138,7 @@ export default {
     methods: {
         loadMarkers(center, bounds) {
             const centerString = center.lat() + "," + center.lng();
-            const southwestString = bounds.na.j + "," + bounds.ga.j;
+            const southwestString = bounds.getSouthWest().lat() + "," + bounds.getSouthWest().lng();
 
             this.isLoading = true;
 
