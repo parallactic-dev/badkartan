@@ -18,104 +18,176 @@ export default {
             isLoading: false,
             mapStyle: [
                 {
-                    featureType: "landscape",
-                    stylers: [
+                    "featureType": "water",
+                    "elementType": "geometry",
+                    "stylers": [
                         {
-                            hue: "#FFA800"
+                            "color": "#e9e9e9"
                         },
                         {
-                            saturation: 0
-                        },
-                        {
-                            lightness: 0
-                        },
-                        {
-                            gamma: 1
+                            "lightness": 17
                         }
                     ]
                 },
                 {
-                    featureType: "road.highway",
-                    stylers: [
+                    "featureType": "landscape",
+                    "elementType": "geometry",
+                    "stylers": [
                         {
-                            hue: "#53FF00"
+                            "color": "#f5f5f5"
                         },
                         {
-                            saturation: -73
-                        },
-                        {
-                            lightness: 40
-                        },
-                        {
-                            gamma: 1
+                            "lightness": 20
                         }
                     ]
                 },
                 {
-                    featureType: "road.arterial",
-                    stylers: [
+                    "featureType": "road.highway",
+                    "elementType": "geometry.fill",
+                    "stylers": [
                         {
-                            hue: "#FBFF00"
+                            "color": "#ffffff"
                         },
                         {
-                            saturation: 0
-                        },
-                        {
-                            lightness: 0
-                        },
-                        {
-                            gamma: 1
+                            "lightness": 17
                         }
                     ]
                 },
                 {
-                    featureType: "road.local",
-                    stylers: [
+                    "featureType": "road.highway",
+                    "elementType": "geometry.stroke",
+                    "stylers": [
                         {
-                            hue: "#00FFFD"
+                            "color": "#ffffff"
                         },
                         {
-                            saturation: 0
+                            "lightness": 29
                         },
                         {
-                            lightness: 30
-                        },
-                        {
-                            gamma: 1
+                            "weight": 0.2
                         }
                     ]
                 },
                 {
-                    featureType: "water",
-                    stylers: [
+                    "featureType": "road.arterial",
+                    "elementType": "geometry",
+                    "stylers": [
                         {
-                            hue: "#00BFFF"
+                            "color": "#ffffff"
                         },
                         {
-                            saturation: 6
-                        },
-                        {
-                            lightness: 8
-                        },
-                        {
-                            gamma: 1
+                            "lightness": 18
                         }
                     ]
                 },
                 {
-                    featureType: "poi",
-                    stylers: [
+                    "featureType": "road.local",
+                    "elementType": "geometry",
+                    "stylers": [
                         {
-                            hue: "#679714"
+                            "color": "#ffffff"
                         },
                         {
-                            saturation: 33.4
+                            "lightness": 16
+                        }
+                    ]
+                },
+                {
+                    "featureType": "poi",
+                    "elementType": "geometry",
+                    "stylers": [
+                        {
+                            "color": "#f5f5f5"
                         },
                         {
-                            lightness: -25.4
+                            "lightness": 21
+                        }
+                    ]
+                },
+                {
+                    "featureType": "poi.park",
+                    "elementType": "geometry",
+                    "stylers": [
+                        {
+                            "color": "#dedede"
                         },
                         {
-                            gamma: 1
+                            "lightness": 21
+                        }
+                    ]
+                },
+                {
+                    "elementType": "labels.text.stroke",
+                    "stylers": [
+                        {
+                            "visibility": "on"
+                        },
+                        {
+                            "color": "#ffffff"
+                        },
+                        {
+                            "lightness": 16
+                        }
+                    ]
+                },
+                {
+                    "elementType": "labels.text.fill",
+                    "stylers": [
+                        {
+                            "saturation": 36
+                        },
+                        {
+                            "color": "#333333"
+                        },
+                        {
+                            "lightness": 40
+                        }
+                    ]
+                },
+                {
+                    "elementType": "labels.icon",
+                    "stylers": [
+                        {
+                            "visibility": "off"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "transit",
+                    "elementType": "geometry",
+                    "stylers": [
+                        {
+                            "color": "#f2f2f2"
+                        },
+                        {
+                            "lightness": 19
+                        }
+                    ]
+                },
+                {
+                    "featureType": "administrative",
+                    "elementType": "geometry.fill",
+                    "stylers": [
+                        {
+                            "color": "#fefefe"
+                        },
+                        {
+                            "lightness": 20
+                        }
+                    ]
+                },
+                {
+                    "featureType": "administrative",
+                    "elementType": "geometry.stroke",
+                    "stylers": [
+                        {
+                            "color": "#fefefe"
+                        },
+                        {
+                            "lightness": 17
+                        },
+                        {
+                            "weight": 1.2
                         }
                     ]
                 }
