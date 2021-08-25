@@ -156,7 +156,7 @@ export default {
         },
         onDataLoaded(data) {
             const parser = new DOMParser();
-            const xmlDoc = parser.parseFromString(data.data, "text/xml");
+            const xmlDoc = parser.parseFromString(data.data.data, "text/xml");
             const parsedData = xmlToJson(xmlDoc);
 
             if (parsedData.markers && parsedData.markers.marker)

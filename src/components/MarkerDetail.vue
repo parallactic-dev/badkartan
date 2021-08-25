@@ -24,7 +24,7 @@ export default {
             .get(process.env.VUE_APP_API_URL + 'https://www.badkartan.se' + this.data.point_link)
             .then((data) => {
                 let site = document.createElement('html');
-                site.innerHTML = data.data;
+                site.innerHTML = data.data.data;
                 
                 const markerDescription = site.getElementsByClassName('description_text');
                 if (markerDescription.length > 0)
